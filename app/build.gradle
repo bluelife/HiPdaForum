@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "forum.org.hipda"
@@ -17,9 +17,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'javax.inject:javax.inject:1'
+    compile 'com.google.dagger:dagger:2.0.1'
+    compile 'io.reactivex:rxjava:1.0.12'
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.jakewharton:butterknife:7.0.0'
+    compile project(':data')
+    compile project(':domain')
+    compile 'javax.annotation:javax.annotation-api:1.2'
 }

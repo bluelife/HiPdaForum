@@ -1,6 +1,5 @@
 package forum.org.hipda.data.net;
 
-import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -10,13 +9,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import forum.org.hipda.data.entity.Board;
-import forum.org.hipda.data.entity.LoginInfo;
+import forum.org.hipda.domain.entity.LoginInfo;
 import forum.org.hipda.data.entity.Post;
-import forum.org.hipda.data.entity.User;
+
 import forum.org.hipda.data.entity.mapper.LoginMapper;
 import forum.org.hipda.data.exception.NetworkConnectionException;
+import forum.org.hipda.domain.entity.User;
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by silong on 2015/6/28.

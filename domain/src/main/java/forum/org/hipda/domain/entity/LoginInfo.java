@@ -1,4 +1,4 @@
-package forum.org.hipda.data.entity;
+package forum.org.hipda.domain.entity;
 
 /**
  * Created by silong on 2015/6/28.

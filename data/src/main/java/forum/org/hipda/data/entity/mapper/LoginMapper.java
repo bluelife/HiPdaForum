@@ -1,6 +1,6 @@
 package forum.org.hipda.data.entity.mapper;
 
-import forum.org.hipda.data.entity.LoginInfo;
+import forum.org.hipda.domain.entity.LoginInfo;
 
 /**
  * Created by silong on 2015/6/28.

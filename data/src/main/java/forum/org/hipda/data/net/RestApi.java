@@ -5,11 +5,10 @@ package forum.org.hipda.data.net;
 import java.util.List;
 
 import forum.org.hipda.data.entity.Board;
-import forum.org.hipda.data.entity.LoginInfo;
+import forum.org.hipda.domain.entity.LoginInfo;
 import forum.org.hipda.data.entity.Post;
-import forum.org.hipda.data.entity.User;
-import retrofit.http.Body;
-import retrofit.http.POST;
+
+import forum.org.hipda.domain.entity.User;
 import rx.Observable;
 
 /**
