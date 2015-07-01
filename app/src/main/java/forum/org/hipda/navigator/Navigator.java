@@ -1,5 +1,8 @@
 package forum.org.hipda.navigator;
 
+import android.content.Context;
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -12,4 +15,9 @@ public class Navigator {
     public Navigator() {
     }
 
+    public void navigateToForum(Context context){
+        if(context!=null){
+            Log.w("navigator","go to forum");
+        }
+    }
 }

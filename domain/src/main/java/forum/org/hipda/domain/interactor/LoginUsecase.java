@@ -1,6 +1,8 @@
 package forum.org.hipda.domain.interactor;
 
 
+import javax.inject.Inject;
+
 import forum.org.hipda.domain.entity.User;
 import forum.org.hipda.domain.executor.PostExecutionThread;
 import forum.org.hipda.domain.executor.ThreadExecutor;
@@ -13,12 +15,15 @@ import rx.Observable;
 public class LoginUsecase extends UseCase {
     private GetLogin getLogin;
     private User user;
-    protected LoginUsecase(GetLogin getLogin,User user,ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    @Inject
+    public LoginUsecase(GetLogin getLogin,ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.getLogin=getLogin;
-        this.user=user;
     }
 
+    public void setUser(User user){
+        this.user=user;
+    }
     @Override
     protected Observable buildUseCaseObservable() {
         return getLogin.getInfo(user);

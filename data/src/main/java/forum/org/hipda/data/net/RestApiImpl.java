@@ -8,6 +8,9 @@ import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import forum.org.hipda.data.entity.Board;
 import forum.org.hipda.domain.entity.LoginInfo;
 import forum.org.hipda.data.entity.Post;
@@ -20,9 +23,11 @@ import rx.Observable;
 /**
  * Created by silong on 2015/6/28.
  */
+@Singleton
 public class RestApiImpl implements RestApi {
     private Context context;
 
+    @Inject
     public RestApiImpl(Context context) {
         this.context = context;
     }

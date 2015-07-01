@@ -13,6 +13,5 @@ import forum.org.hipda.di.module.ActivityModule;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class,modules = ActivityModule.class)
 public interface ActivityComponent {
-
     Activity getActivity();
 }
