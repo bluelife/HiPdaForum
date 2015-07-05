@@ -1,5 +1,7 @@
 package forum.org.hipda.presenter;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -65,6 +67,7 @@ public class LoginPresent extends DefaultSubscriber<LoginInfo> implements Presen
     @Override
     public void onNext(LoginInfo loginInfo) {
         loginView.hideLoading();
+        Log.w("onenxt",loginInfo+"");
         if(loginInfo==LoginInfo.SUCCESS){
             loginView.onloginSuccess();
         }

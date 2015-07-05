@@ -3,6 +3,7 @@ package forum.org.hipda.data.net;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import java.net.MalformedURLException;
 import java.util.LinkedHashMap;
@@ -12,11 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import forum.org.hipda.data.entity.Board;
+import forum.org.hipda.data.entity.mapper.ForumMapper;
 import forum.org.hipda.domain.entity.LoginInfo;
-import forum.org.hipda.data.entity.Post;
 
 import forum.org.hipda.data.entity.mapper.LoginMapper;
 import forum.org.hipda.data.exception.NetworkConnectionException;
+import forum.org.hipda.domain.entity.Post;
 import forum.org.hipda.domain.entity.User;
 import rx.Observable;
 
@@ -34,14 +36,16 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<LoginInfo> login(User user) {
+
         return Observable.create(subscriber -> {
             if(isThereInternetConnection()){
 
                 try {
                     String response = loginFromApi(user);
+                    Log.w("response",response);
                     if (response != null) {
 
-                        subscriber.onNext(new LoginMapper().transform(response));
+                        subscriber.onNext(new LoginMapper().transform(context,response));
                         subscriber.onCompleted();
                     }
                     else{
@@ -49,7 +53,7 @@ public class RestApiImpl implements RestApi {
                     }
                 }
                 catch (Exception ex){
-
+                    Log.w("response",ex+"");
                     subscriber.onError(new NetworkConnectionException());
                 }
             }
@@ -62,14 +66,44 @@ public class RestApiImpl implements RestApi {
     private String loginFromApi(User user) throws MalformedURLException{
 
         LinkedHashMap<String,String> map=new LinkedHashMap<>();
-        map.put("user",user.getUsername());
+        map.put("username",user.getUsername());
         map.put("password",user.getPassword());
+        map.put("cookietime","2592000");
+        map.put("loginfield", "username");
         return ApiConnection.createGET(RestApi.LOGIN_URL).postSyncCall(map);
+    }
+
+    private String getThreadsFromApi(int id) throws MalformedURLException{
+
+        return ApiConnection.createGET(RestApi.API_BASE_URL+RestApi.THREADS_URL+id).requestSyncCall();
     }
 
     @Override
     public Observable<Post> getPost() {
         return null;
+    }
+
+    @Override
+    public Observable<List<Post>> getThreads(int id) {
+        return Observable.create(subscriber -> {
+            if(isThereInternetConnection()) {
+
+                try {
+                    String response = getThreadsFromApi(id);
+                    if (response != null) {
+                        subscriber.onNext(new ForumMapper().transformPosts(response));
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(new NetworkConnectionException());
+                    }
+                } catch (Exception ex) {
+                    subscriber.onError(new NetworkConnectionException());
+                }
+            }
+            else{
+                subscriber.onError(new NetworkConnectionException());
+            }
+            });
     }
 
     @Override

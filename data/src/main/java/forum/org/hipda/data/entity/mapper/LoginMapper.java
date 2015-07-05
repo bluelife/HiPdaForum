@@ -1,5 +1,8 @@
 package forum.org.hipda.data.entity.mapper;
 
+import android.content.Context;
+
+import forum.org.hipda.data.R;
 import forum.org.hipda.domain.entity.LoginInfo;
 
 /**
@@ -7,9 +10,9 @@ import forum.org.hipda.domain.entity.LoginInfo;
  */
 public class LoginMapper {
 
-    public LoginInfo transform(String info){
+    public LoginInfo transform(Context context,String info){
         LoginInfo loginInfo;
-        if(info.contains("")){
+        if(info.contains(context.getString(R.string.login_success))){
             loginInfo=LoginInfo.SUCCESS;
         }
         else if(info.contains("")){

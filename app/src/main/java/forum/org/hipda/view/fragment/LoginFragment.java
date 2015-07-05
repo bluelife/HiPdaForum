@@ -53,7 +53,6 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.w("frame","attach");
         if(activity instanceof LoginListener)
             loginListener=(LoginListener)activity;
     }
@@ -62,8 +61,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView=inflater.inflate(R.layout.fragment_login,container,true);
-        Log.w("frame","attach");
-        ButterKnife.bind(fragmentView);
+        ButterKnife.bind(this,fragmentView);
         return fragmentView;
     }
 
@@ -75,6 +73,7 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     private void init(){
         getComponent(LoginComponent.class).inject(this);
+        loginPresent.setView(this);
     }
 
     @Override

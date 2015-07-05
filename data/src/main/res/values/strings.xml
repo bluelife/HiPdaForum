@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Data</string>
+    <string name="login_success">"欢迎您回来"</string>
+    <string name="login_fail">"登录失败"</string>
 </resources>

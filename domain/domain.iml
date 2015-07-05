@@ -30,6 +30,7 @@
     <orderEntry type="library" exported="" name="rxjava-1.0.12" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-0.24.0" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="lombok-1.16.4" level="project" />
     <orderEntry type="library" exported="" name="domain.domain" level="project" />
   </component>
 </module>

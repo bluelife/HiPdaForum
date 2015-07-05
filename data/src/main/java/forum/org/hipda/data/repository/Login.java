@@ -1,5 +1,7 @@
 package forum.org.hipda.data.repository;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,6 +26,7 @@ public class Login implements GetLogin {
 
     @Override
     public Observable<LoginInfo> getInfo(User user) {
+        Log.w("getinfo",user.getUsername());
         return restApi.login(user);
     }
 }

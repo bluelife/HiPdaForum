@@ -52,6 +52,7 @@ public class ApiConnection implements Callable<String> {
         }
         return response;
     }
+
     /**
      * Do a request to an api synchronously.
      * It should not be executed in the main thread of the application.
