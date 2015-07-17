@@ -11,9 +11,11 @@ import forum.org.hipda.UIThread;
 import forum.org.hipda.data.executor.JobExecutor;
 import forum.org.hipda.data.net.RestApi;
 import forum.org.hipda.data.net.RestApiImpl;
+import forum.org.hipda.data.repository.ForumData;
 import forum.org.hipda.data.repository.Login;
 import forum.org.hipda.domain.executor.PostExecutionThread;
 import forum.org.hipda.domain.executor.ThreadExecutor;
+import forum.org.hipda.domain.repository.ForumSource;
 import forum.org.hipda.domain.repository.GetLogin;
 import forum.org.hipda.navigator.Navigator;
 
@@ -55,6 +57,10 @@ public class ApplicationModule {
     @Provides @Singleton
     RestApi provideApi(RestApiImpl restApi){
         return restApi;
+    }
+    @Provides @Singleton
+    ForumSource provideForumSource(ForumData data){
+        return data;
     }
 
 

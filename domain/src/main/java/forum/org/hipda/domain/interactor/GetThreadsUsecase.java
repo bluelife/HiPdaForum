@@ -13,15 +13,21 @@ import rx.Observable;
 public class GetThreadsUsecase extends UseCase {
     private ForumSource forumSource;
     private int id;
+    private int pageIndex;
 
     @Inject
-    public GetThreadsUsecase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, ForumSource forumSource,int id) {
+    public GetThreadsUsecase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, ForumSource forumSource,int id,int i) {
         super(threadExecutor, postExecutionThread);
         this.forumSource = forumSource;
+        this.id=id;
+        pageIndex=i;
+    }
+    public void addPageIndex(){
+        pageIndex++;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return forumSource.getThreadList(id);
+        return forumSource.getThreadList(id,pageIndex);
     }
 }

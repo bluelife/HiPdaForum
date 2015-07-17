@@ -2,11 +2,14 @@ package forum.org.hipda.presenter;
 
 import android.util.Log;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import forum.org.hipda.di.PerActivity;
 import forum.org.hipda.domain.entity.LoginInfo;
+import forum.org.hipda.domain.entity.Post;
 import forum.org.hipda.domain.entity.User;
 import forum.org.hipda.domain.interactor.DefaultSubscriber;
 import forum.org.hipda.domain.interactor.LoginUsecase;
@@ -17,7 +20,7 @@ import forum.org.hipda.view.LoginView;
  * Created by slomka.jin on 2015/6/30.
  */
 @PerActivity
-public class LoginPresent extends DefaultSubscriber<LoginInfo> implements Presenter {
+public class LoginPresent  implements Presenter {
 
     private LoginView loginView;
     private final LoginUsecase loginUsecase;
@@ -33,7 +36,7 @@ public class LoginPresent extends DefaultSubscriber<LoginInfo> implements Presen
 
     public void onLoginClick(User user){
         loginUsecase.setUser(user);
-        loginUsecase.execute(this);
+        loginUsecase.execute(new LoginSubscriber());
     }
     @Override
     public void resume() {
@@ -51,8 +54,34 @@ public class LoginPresent extends DefaultSubscriber<LoginInfo> implements Presen
         loginUsecase.unsubscribe();
     }
 
+    private class LoginSubscriber extends DefaultSubscriber<LoginInfo> {
+        @Override
+        public void onCompleted() {
 
-    @Override
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            loginView.hideLoading();
+            loginView.showError(e.getMessage());
+        }
+
+        @Override
+        public void onNext(LoginInfo loginInfo) {
+            loginView.hideLoading();
+            Log.w("onenxt", loginInfo + "");
+            if(loginInfo==LoginInfo.SUCCESS){
+                loginView.onloginSuccess();
+            }
+            else if(loginInfo==LoginInfo.FAIL){
+                loginView.showError("login fail");
+            }
+            else{
+                loginView.showError("unknown error");
+            }
+        }
+    }
+    /*@Override
     public void onCompleted() {
         super.onCompleted();
     }
@@ -77,5 +106,5 @@ public class LoginPresent extends DefaultSubscriber<LoginInfo> implements Presen
         else{
             loginView.showError("unknown error");
         }
-    }
+    }*/
 }

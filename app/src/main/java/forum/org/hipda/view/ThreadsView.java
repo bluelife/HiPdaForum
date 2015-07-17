@@ -9,4 +9,7 @@ import forum.org.hipda.domain.entity.Post;
  */
 public interface ThreadsView extends LoadDataView {
     void showThreads(List<Post> posts);
+    void hideSwipeLoading();
+    void refreshThreads(List<Post> posts);
+    void updateThreads(List<Post> posts);
 }

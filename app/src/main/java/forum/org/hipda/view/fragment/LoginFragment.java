@@ -115,6 +115,6 @@ public class LoginFragment extends BaseFragment implements LoginView{
 
     @Override
     public Context getContext() {
-        return null;
+        return this.getActivity().getApplicationContext();
     }
 }

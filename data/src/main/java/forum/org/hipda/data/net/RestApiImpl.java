@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import forum.org.hipda.data.entity.Board;
+import forum.org.hipda.data.entity.PostList;
 import forum.org.hipda.data.entity.mapper.ForumMapper;
 import forum.org.hipda.domain.entity.LoginInfo;
 
@@ -36,8 +37,8 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<LoginInfo> login(User user) {
-
         return Observable.create(subscriber -> {
+            Log.w("login",user.getUsername());
             if(isThereInternetConnection()){
 
                 try {
@@ -70,12 +71,16 @@ public class RestApiImpl implements RestApi {
         map.put("password",user.getPassword());
         map.put("cookietime","2592000");
         map.put("loginfield", "username");
+
         return ApiConnection.createGET(RestApi.LOGIN_URL).postSyncCall(map);
     }
 
-    private String getThreadsFromApi(int id) throws MalformedURLException{
+    private String getThreadsFromApi(int id,int index) throws MalformedURLException{
 
-        return ApiConnection.createGET(RestApi.API_BASE_URL+RestApi.THREADS_URL+id).requestSyncCall();
+        return ApiConnection.createGET(RestApi.API_BASE_URL+RestApi.THREADS_URL+id+"&page="+index).requestSyncCall();
+    }
+    private String getPostDetailsFromApi(int id,int index) throws MalformedURLException{
+        return ApiConnection.createGET(RestApi.API_BASE_URL+RestApi.DETAIL_URL+id+"&page="+index).requestSyncCall();
     }
 
     @Override
@@ -84,13 +89,15 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<Post>> getThreads(int id) {
+    public Observable<List<Post>> getThreads(int id,int index) {
         return Observable.create(subscriber -> {
             if(isThereInternetConnection()) {
 
                 try {
-                    String response = getThreadsFromApi(id);
+                    String response = getPostDetailsFromApi(id, index);
+                    Log.w("resssss",response);
                     if (response != null) {
+
                         subscriber.onNext(new ForumMapper().transformPosts(response));
                         subscriber.onCompleted();
                     } else {
@@ -104,6 +111,31 @@ public class RestApiImpl implements RestApi {
                 subscriber.onError(new NetworkConnectionException());
             }
             });
+    }
+
+    @Override
+    public Observable<PostList> getPostDetails(int id, int index) {
+        return Observable.create(subscriber -> {
+            if(isThereInternetConnection()) {
+
+                try {
+                    String response = getThreadsFromApi(id,index);
+                    Log.w("resssss",response);
+                    if (response != null) {
+
+                        subscriber.onNext(new ForumMapper().transformDetails(response));
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(new NetworkConnectionException());
+                    }
+                } catch (Exception ex) {
+                    subscriber.onError(new NetworkConnectionException());
+                }
+            }
+            else{
+                subscriber.onError(new NetworkConnectionException());
+            }
+        });
     }
 
     @Override

@@ -10,6 +10,7 @@ import forum.org.hipda.data.net.RestApi;
 import forum.org.hipda.di.module.ApplicationModule;
 import forum.org.hipda.domain.executor.PostExecutionThread;
 import forum.org.hipda.domain.executor.ThreadExecutor;
+import forum.org.hipda.domain.repository.ForumSource;
 import forum.org.hipda.domain.repository.GetLogin;
 import forum.org.hipda.view.activity.BaseActivity;
 
@@ -27,4 +28,5 @@ public interface ApplicationComponent {
     PostExecutionThread postExecutionThread();
     GetLogin login();
     RestApi api();
+    ForumSource forumSource();
 }
