@@ -20,6 +20,26 @@
         </activity>
         <activity android:name=".view.activity.ThreadsActivity">
 
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".view.activity.SearchActivity"></meta-data>
+
+        </activity>
+        <activity android:name=".view.activity.PostDetailActivity">
+
+        </activity>
+        <activity android:name=".view.activity.SearchActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
     </application>
 

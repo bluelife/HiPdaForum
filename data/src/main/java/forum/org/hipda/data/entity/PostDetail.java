@@ -1,6 +1,8 @@
 package forum.org.hipda.data.entity;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -114,8 +116,8 @@ public class PostDetail {
             }
         }
 
-        public void addImg(String url, Boolean isInternal) {
-            ContentImg contentImg = new ContentImg(url, isInternal);
+        public void addImg(String url) {
+            ContentImg contentImg = new ContentImg(url);
             list.add(contentImg);
             mImages.add(contentImg);
             newString = true;

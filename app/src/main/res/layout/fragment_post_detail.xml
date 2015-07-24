@@ -3,10 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/details_recyclerView"></RecyclerView>
+        android:id="@+id/details_recyclerView"></android.support.v7.widget.RecyclerView>
     <include
         layout="@layout/progress"/>
 </RelativeLayout>

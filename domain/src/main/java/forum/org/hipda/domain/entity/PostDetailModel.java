@@ -93,7 +93,7 @@ public class PostDetailModel {
     }
 
     public void setTimePost(String mTimePost) {
-        this.mTimePost = mTimePost.substring(4);
+        this.mTimePost = mTimePost;
     }
 
     public String getFloor() {

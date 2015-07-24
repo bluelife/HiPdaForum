@@ -1,5 +1,7 @@
 package forum.org.hipda.data.entity.mapper;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class ForumDataMapper {
     public PostListModel transformPostList(PostList postList){
 
         PostListModel postListModel=null;
+
 
         if(postList!=null){
             List<PostDetailModel> detailModels=new ArrayList<>();

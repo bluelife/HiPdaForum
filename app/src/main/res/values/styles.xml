@@ -1,8 +1,17 @@
 <resources>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="list_item_background">@color/day_list_item_background</item>
         <item name="list_item_divider">@color/day_list_item_divider</item>
+        <item name="colorPrimary">@color/md_grey_700</item>
+        <item name="colorPrimaryDark">@color/md_grey_800</item>
+        <item name="colorAccent">@color/blue</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimaryLight</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryLight</item>
+
+        <item name="background">@color/day_background</item>
+
     </style>
 
     <style name="AppTheme.ProgressBar">

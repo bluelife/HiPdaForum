@@ -6,5 +6,11 @@
     <string name="exception_message_generic">There was an application error</string>
     <string name="exception_message_no_connection">There is no internet connection</string>
     <string name="exception_message_user_not_found">Cannot retrieve user data. Check your internet connection</string>
+    <string name="search">search</string>
+    <string name="menu_message">message</string>
+    <string name="search_hint">search for threads</string>
+    <string name="search_all">搜索全文</string>
+    <string name="search_title">搜索标题</string>
+    <string name="search_type">搜索选项</string>
 
 </resources>

@@ -2,6 +2,7 @@ package forum.org.hipda.view.custom;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -35,20 +37,24 @@ public class TextViewWithEmoticon extends TextView {
     private boolean mTrim;
 
     public TextViewWithEmoticon(Context context) {
-        super(context);
-        mCtx = context;
-        init();
+        this(context, null);
     }
 
     public TextViewWithEmoticon(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context,attrs,0);
+    }
+
+    public TextViewWithEmoticon(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         mCtx = context;
         init();
     }
 
     private void init() {
-        setTextColor(ColorUtils.getDefaultTextColor(mCtx));
-        setLinkTextColor(ColorUtils.getColorAccent(mCtx));
+        setTextColor(Color.BLACK);
+        //setTextColor(ColorUtils.getDefaultTextColor(mCtx));
+        //Log.w("clol", ColorUtils.getDefaultTextColor(mCtx) + " "+mCtx);
+        //setLinkTextColor(ColorUtils.getColorAccent(mCtx));
 
         float lineSpacingExtra = 2;
         float lineSpacingMultiplier = 1.1f;

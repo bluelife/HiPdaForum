@@ -48,5 +48,6 @@
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
     <color name="blue_normal">#5677fc</color>
     <color name="blue_pressed">#738ffe</color>
-
+    <color name="md_grey_700">#616161</color>
+    <color name="md_grey_800">#424242</color>
 </resources>

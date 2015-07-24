@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
@@ -15,7 +16,7 @@ import forum.org.hipda.navigator.Navigator;
 /**
  * Created by slomka.jin on 2015/6/30.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
     Navigator navigator;

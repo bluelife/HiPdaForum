@@ -25,7 +25,7 @@ public class Navigator {
             context.startActivity(intent);
         }
     }
-    public void navigateToDetail(Context context,String id){
+    public void navigateToDetail(Context context,int id){
         if(context!=null){
             Intent intent= PostDetailActivity.getCallingIntent(context,id);
             context.startActivity(intent);

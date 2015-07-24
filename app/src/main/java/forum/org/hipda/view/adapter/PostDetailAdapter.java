@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.util.Linkify;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +36,10 @@ import forum.org.hipda.view.custom.TextViewWithEmoticon;
  */
 public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.DetailHolder> {
 
+    private final SparseBooleanArray positionsMapper;
+    private final AccelerateDecelerateInterpolator interpolator;
+    private int previousPostition=-1;
+    private static final long duration=350L;
     private List<PostDetailModel> detailModels;
     private Context context;
     private LayoutInflater mInflater;
@@ -40,12 +47,15 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
     public PostDetailAdapter(List<PostDetailModel> detailModels, Context context) {
         this.detailModels = detailModels;
         this.context = context;
-        mInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //mInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater=LayoutInflater.from(context);
+        positionsMapper = new SparseBooleanArray(getItemCount());
+        interpolator = new AccelerateDecelerateInterpolator();
     }
 
     @Override
     public DetailHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.thread_item,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_detail,parent,false);
         DetailHolder detailHolder=new DetailHolder(v,parent);
         return detailHolder;
     }
@@ -54,7 +64,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
     public void onBindViewHolder(DetailHolder holder, int position) {
 
         PostDetailModel detailModel=detailModels.get(position);
-        holder.bind(detailModel);
+        holder.bind(detailModel,position);
     }
 
     @Override
@@ -79,14 +89,25 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
         private boolean trimBr;
         private ViewGroup parent;
 
+
         public DetailHolder(View itemView,ViewGroup viewGroup) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             parent=viewGroup;
         }
-        public void bind(PostDetailModel postDetailModel){
+        public void bind(PostDetailModel postDetailModel,int position){
+            if(!positionsMapper.get(position)&&position>previousPostition){
+                itemView.setTranslationX(0.0F);
+                itemView.setTranslationY(400);
+
+                itemView.animate().translationX(0).translationY(0).setDuration(duration)
+                        .setInterpolator(interpolator);
+                positionsMapper.put(position, true);
+                previousPostition = position;
+            }
             Glide.with(context).load(postDetailModel.getAvatarUrl()).into(avatar);
             author.setText(postDetailModel.getAuthor());
+            Log.w("author",postDetailModel.getAuthor());
             time.setText(postDetailModel.getTimePost());
             floor.setText(postDetailModel.getFloor());
             status.setText(postDetailModel.getPostStatus());
@@ -94,9 +115,12 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
             for (int i = 0; i < postDetailModel.getContents().getSize(); i++) {
                 ContentAbs content = postDetailModel.getContents().get(i);
                 if (content instanceof ContentText) {
-                    TextViewWithEmoticon tv = (TextViewWithEmoticon) mInflater.inflate(R.layout.item_textview_withemoticon, parent, false);
-                    //tv.setFragmentManager(mFragmentManager);
-                    //tv.setTextSize(HiSettingsHelper.getPostTextSize());
+                    try {
+                        TextViewWithEmoticon tv = (TextViewWithEmoticon)new TextViewWithEmoticon(context);
+                        //TextViewWithEmoticon tv = (TextViewWithEmoticon) mInflater.inflate(R.layout.item_textview_withemoticon, parent, false);
+                        //tv.setFragmentManager(mFragmentManager);
+                        //tv.setTextSize(HiSettingsHelper.getPostTextSize());
+
                     tv.setPadding(8, 8, 8, 8);
 
                     //dirty hack, remove extra <br>
@@ -113,9 +137,18 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
                         tv.setFocusable(false);
                         contentLayout.addView(tv);
                     }
+                    }
+                    catch (Exception ex){
+                        Log.w("ex", ex);
+                    }
                 } else if (content instanceof ContentImg) {
                     final String imageUrl = content.getContent();
+                    ImageView postImage=new ImageView(context);
+                    LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+                    Log.w("load imag",imageUrl+"");
+                    Glide.with(context).load(imageUrl).skipMemoryCache(true).into(postImage);
+                    contentLayout.addView(postImage,layoutParams);
 
                 } else if (content instanceof ContentAttach) {
                     TextViewWithEmoticon tv = (TextViewWithEmoticon) mInflater.inflate(R.layout.item_textview_withemoticon, parent, false);
@@ -150,17 +183,17 @@ public class PostDetailAdapter extends RecyclerView.Adapter<PostDetailAdapter.De
                         ContentGoToFloor goToFloor = (ContentGoToFloor) content;
                         author = goToFloor.getAuthor();
                         floor = goToFloor.getFloor();
-                        PostDetailModel detailBean = mDetailFragment.getCachedPost(goToFloor.getPostId());
+                        /*PostDetailModel detailBean = mDetailFragment.getCachedPost(goToFloor.getPostId());
                         if (detailBean != null) {
                             text = detailBean.getContents().getContent();
                             floor = Integer.parseInt(detailBean.getFloor());
-                        }
+                        }*/
                         note = floor + "#";
                     } else {
                         ContentQuote contentQuote = (ContentQuote) content;
                         PostDetailModel detailBean = null;
                         if (!TextUtils.isEmpty(contentQuote.getPostId()) && TextUtils.isDigitsOnly(contentQuote.getPostId())) {
-                            detailBean = mDetailFragment.getCachedPost(contentQuote.getPostId());
+                            //detailBean = mDetailFragment.getCachedPost(contentQuote.getPostId());
                         }
                         if (detailBean != null) {
                             author = contentQuote.getAuthor();

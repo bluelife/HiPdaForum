@@ -25,7 +25,7 @@ public class PostDetailActivity extends BaseActivity implements HasComponent<For
         initActivity(savedInstanceState);
         init();
     }
-    public static Intent getCallingIntent(Context context,String postId){
+    public static Intent getCallingIntent(Context context,int postId){
         Intent callingIntent = new Intent(context, PostDetailActivity.class);
         callingIntent.putExtra(INTENT_EXTRA_PARAM_POST_ID, postId);
         return callingIntent;

@@ -1,6 +1,8 @@
 package forum.org.hipda.utils;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.util.HashMap;
@@ -23,7 +25,10 @@ public class ColorUtils {
             return COLOR_IDS.get(attrId);
 
         TypedValue typedValue = new TypedValue();
-        ctx.getTheme().resolveAttribute(attrId, typedValue, true);
+        ctx.getTheme().resolveAttribute(R.attr.color, typedValue, true);
+        TypedArray typedArray = ctx.getTheme().obtainStyledAttributes(new int[]{attrId, 0 });
+        Log.w("res id", typedValue.resourceId + " " + attrId);
+
         int colorId = ctx.getResources().getColor(typedValue.resourceId);
         COLOR_IDS.put(attrId, colorId);
 

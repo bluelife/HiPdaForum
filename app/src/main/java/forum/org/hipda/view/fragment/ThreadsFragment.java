@@ -95,7 +95,7 @@ public class ThreadsFragment extends BaseFragment implements ThreadsView, Thread
     @Override
     public void showThreads(List<Post> posts) {
 
-        Log.w("posts",posts.get(0).getTitle());
+        Log.w("threads frag posts",posts.get(0).getTitle());
         if(threadsAdapter==null){
             threadsAdapter=new ThreadsAdapter(getContext(),posts);
             threadsAdapter.setItemClickListener(this);
@@ -146,7 +146,7 @@ public class ThreadsFragment extends BaseFragment implements ThreadsView, Thread
     @Override
     public void showError(String message) {
 
-        Log.w("threads",message);
+        Log.w("threads",message+"");
     }
 
     @Override

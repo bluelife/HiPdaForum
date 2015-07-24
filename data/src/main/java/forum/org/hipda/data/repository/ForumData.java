@@ -5,11 +5,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import forum.org.hipda.data.entity.PostList;
 import forum.org.hipda.data.entity.mapper.ForumDataMapper;
 import forum.org.hipda.data.net.RestApi;
 import forum.org.hipda.domain.entity.Post;
 import forum.org.hipda.domain.entity.PostListModel;
+import forum.org.hipda.domain.entity.PostResult;
+import forum.org.hipda.domain.entity.PostResultItem;
 import forum.org.hipda.domain.repository.ForumSource;
 import rx.Observable;
 
@@ -22,8 +23,10 @@ public class ForumData implements ForumSource {
     private ForumDataMapper forumDataMapper;
 
     @Inject
-    public ForumData(RestApi restApi) {
+    public ForumData(RestApi restApi,ForumDataMapper mapper)
+    {
         this.restApi = restApi;
+        forumDataMapper=mapper;
     }
 
     @Override
@@ -34,5 +37,10 @@ public class ForumData implements ForumSource {
     @Override
     public Observable<PostListModel> getPostDetailList(int id, int index) {
         return restApi.getPostDetails(id, index).map(postList -> forumDataMapper.transformPostList(postList));
+    }
+
+    @Override
+    public Observable<PostResult> getPostResultBySearch(String key, int forumId, int index) {
+        return restApi.getPostResultBySearch(key,forumId,index);
     }
 }

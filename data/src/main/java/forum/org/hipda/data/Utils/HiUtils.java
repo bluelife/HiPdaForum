@@ -16,6 +16,7 @@ import forum.org.hipda.data.net.RestApi;
 public class HiUtils {
     private static Whitelist mWhitelist = null;
     private final static String AVATAR_BASE = "000000000";
+    public final static String ENCODE_FORMAT="GBK";
     public static String getMiddleString(String source, String start, String end) {
         int start_idx = source.indexOf(start) + start.length();
         int end_idx = 0;

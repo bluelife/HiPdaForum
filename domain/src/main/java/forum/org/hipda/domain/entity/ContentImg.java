@@ -10,12 +10,9 @@ public class ContentImg extends ContentAbs {
     private String mFloor;
     private int mIndexInPage;
 
-    public ContentImg(String url, boolean isInternal) {
-        if (isInternal) {
-            //mUrl = HiUtils.getFullUrl(url);
-        } else {
-            mUrl = url;
-        }
+    public ContentImg(String url) {
+        mUrl = url;
+
     }
 
     @Override
